@@ -1,25 +1,28 @@
 import java.util.*
 
 fun main() {
+    private const val MAESTRO_CARD_TYPE = 1
+    private const val VISA_CARD_TYPE = 1
+    private const val VKPAY_CARD_TYPE = 1
     var lastAmount = 0
-    val number1 = Scanner(System.`in`)
+    val scanner = Scanner(System.`in`)
     println(
         """Введите номер типа карты/счёта :
-             1. MasterCard или Maestro 
-             2. Visa или Мир
-             3. VK Pay
+             $MAESTRO_CARD_TYPE. MasterCard или Maestro 
+             $VISA_CARD_TYPE. Visa или Мир
+             $VKPAY_CARD_TYPE. VK Pay
         """
     )
-    val typeCard = number1.nextInt()
+    val typeCard = scanner.nextInt()
     if (typeCard in 1..3) {
         when (typeCard) {
             1, 3 -> {
                 print("Введите сумму предыдущих переводов в этом месяце (руб.): ")
-                lastAmount = number1.nextInt() * 100
+                lastAmount = scanner.nextInt() * 100
             }
         }
         print("Введите сумму перевода (руб.): ")
-        val amount = number1.nextInt() * 100
+        val amount = scanner.nextInt() * 100
 
         val rate = when (typeCard) {
             1 -> rateMaestro(amount, lastAmount)
