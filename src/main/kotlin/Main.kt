@@ -1,42 +1,45 @@
 import java.util.*
 
+
+enum class CardType(val number: Int){
+    MAESTRO(1),
+    VISA(2),
+    VKPAY(3)
+}
+
 fun main() {
-    private const val MAESTRO_CARD_TYPE = 1
-    private const val VISA_CARD_TYPE = 1
-    private const val VKPAY_CARD_TYPE = 1
+
     var lastAmount = 0
     val scanner = Scanner(System.`in`)
     println(
         """Введите номер типа карты/счёта :
-             $MAESTRO_CARD_TYPE. MasterCard или Maestro 
-             $VISA_CARD_TYPE. Visa или Мир
-             $VKPAY_CARD_TYPE. VK Pay
+             ${CardType.MAESTRO.number}. MasterCard или Maestro 
+             ${CardType. VISA.number}. Visa или Мир
+             ${CardType.VKPAY.number}. VK Pay
         """
     )
     val typeCard = scanner.nextInt()
-    if (typeCard in 1..3) {
-        when (typeCard) {
-            1, 3 -> {
-                print("Введите сумму предыдущих переводов в этом месяце (руб.): ")
-                lastAmount = scanner.nextInt() * 100
-            }
+    try{
+        val myCard = CardType.values()[typeCard - 1]
+        if (myCard == CardType.MAESTRO || myCard == CardType.VKPAY) {
+            print("Введите сумму предыдущих переводов в этом месяце (руб.): ")
+            lastAmount = scanner.nextInt() * 100
         }
         print("Введите сумму перевода (руб.): ")
         val amount = scanner.nextInt() * 100
 
-        val rate = when (typeCard) {
-            1 -> rateMaestro(amount, lastAmount)
-            2 -> rateVisa(amount)
-            3 -> rateVKPay(amount, lastAmount)
-            else -> null
+        val rate = when (myCard) {
+            CardType.MAESTRO -> rateMaestro(amount, lastAmount)
+            CardType.VISA -> rateVisa(amount)
+            CardType.VKPAY -> rateVKPay(amount, lastAmount)
         }
         if (rate != null) {
-            print("сумма перевода: " + amount + " коп., комиссия = " + rate + " коп.")
+            println("сумма перевода: $amount коп., комиссия = $rate коп.")
         } else {
-            print("Перевод ${amount / 100} руб. невозможен")
+            println("Перевод ${amount / 100} руб. невозможен")
         }
-    } else {
-        print("Неправильный номер. Надо 1,2 или 3")
+    } catch(e:ArrayIndexOutOfBoundsException ) {
+        println("Неправильный номер. Надо 1,2 или 3")
     }
 }
 
