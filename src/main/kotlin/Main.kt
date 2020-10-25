@@ -50,7 +50,7 @@ fun rateMaestro(amount: Int, lastAmount: Int): Int? {
     ) return null                               // restricted summ
     if (lastAmount in 30000..7499999) return 0 // promotion
     val rate = (amount * 0.006).toInt() + 2000
-    return if (rate < 0) null else rate
+    return if (rate > amount|| rate < 0) null else rate
 }
 
 
