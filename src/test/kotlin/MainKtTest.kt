@@ -11,7 +11,7 @@ class MainKtTest {
         val lastAmount = 55000000
         val amount = 10000000
         val result = rateMaestro(amount, lastAmount)
-        assertEquals(0, result)
+        assertEquals(null, result)
     }
 
     @Test
@@ -19,7 +19,7 @@ class MainKtTest {
         val lastAmount = 40000000
         val amount = 16000000
         val result = rateMaestro(amount, lastAmount)
-        assertEquals(0, result)
+        assertEquals(null, result)
     }
 
     @Test
